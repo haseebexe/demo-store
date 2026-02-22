@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { DataContext } from "../../../App";
 import styles from "./Cart.module.css";
 import OrderSummary from "../../OrderSummary/OrderSummary";
@@ -28,9 +28,17 @@ function Cart() {
   };
 
   // Calculate total cart price
-  const totalPrice = cartItems
-    .reduce((acc, item) => acc + item.price * item.quantity, 0)
+  // const totalPrice = cartItems
+  //   .reduce((acc, item) => acc + item.price * item.quantity, 0)
+  //   .toFixed(2);
+
+  // Example usage of useMemo
+
+  const totalPrice = useMemo(()=> {
+    return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
     .toFixed(2);
+  } , [cartItems])
+
 
   // handle cart remove
   const handleCartRemove = (id) => {
